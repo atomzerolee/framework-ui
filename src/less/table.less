@@ -1,0 +1,279 @@
+// 表格
+// variables
+@table-cell-padding:            8px;
+@table-condensed-cell-padding:  5px;
+@table-bg:                      transparent;
+@table-bg-accent:               lighten(@table-bg-hover, 2%); // #f9f9f9
+@table-bg-active:               @table-bg-hover;
+@tr-success-bg:                 #dff0d8;
+@tr-info-bg:                    #d9edf7;
+@tr-danger-bg:                  #f2dede;
+@tr-warning-bg:                 #fcf8e3;
+@datatable-color:               lighten(@gray, 7%); // #666
+@min: 100%;
+
+// mixin
+.img-bg(@file) {
+  background-image: url(@file) no-repeat;
+}
+
+.table-row-variant (@state; @background) {
+  .table > tbody > tr {
+    > td.@{state},
+    > th.@{state},
+    &.@{state} > td,
+    &.@{state} > th {
+      background-color: @background;
+    }
+  }
+  .table-hover > tbody > tr {
+    > td.@{state}:hover,
+    > th.@{state}:hover,
+    &.@{state}:hover > td,
+    &:hover > .@{state},
+    &.@{state}:hover > th {
+      background-color: darken(@background, 5%);
+    }
+  }
+}
+.thead-sorting (@class) {
+  @item:~".thead-sorying-@{class}";
+  @{item} {
+    cursor: pointer; 
+    background-position: right center;
+    .img-bg("../images/dataTable/sort_@{class}.png");
+  }
+}
+
+// component
+// 鼠标选择整行样式
+.tr-selected {
+  background-color: lighten(@body-bg, 95%); //#f3f3f3
+}
+
+// 表格尺寸
+.table.size-MINI {}//迷你
+.table.size-S {}//小
+.table.size-M {}//中
+.table.size-L {}//默认为L，可以不写，可以理解为：均码
+.table.size-XL {}//大
+.table.size-XXL {}//加大
+.table.size-XXXL {}//超大
+
+// 默认table
+// 带水平线
+.table {
+  table& {
+    width: @min;
+    empty-cells: show;
+    background-color: @table-bg;
+    border-collapse: collapse;
+    border-spacing: 0;
+    th { 
+      font-weight: 400;
+    }
+  }
+  & th {
+    font-weight: bold;
+    &:extend(.table td);
+  }
+  & td {
+    padding: ((@line-height-computed / 2) - 2);
+    line-height: @line-height-computed;
+    word-break: break-all;
+  }
+  // & thead + tbody {
+  //   border-top:1px solid @table-border;    
+  // }
+  & & {
+    .bg-fff();
+  }
+  // 带横向分割线
+  &-border {
+    border-top: 1px solid @table-border;
+    & th,
+    & td {
+      border-bottom: 1px solid @table-border;
+    }
+    && {
+      border-bottom: 0;
+    }
+  }
+  &-bg thead th{
+    background-color: #F5FAFE;
+  }
+  // 带外边框
+  &-bordered {
+    .pre-color(11);
+    border-collapse: separate;
+    *border-collapse: collapse;
+    border-left:0;
+    & td,
+    & th {
+      border-left: 1px solid @table-border;
+    }
+  }
+}
+
+// 奇数行背景设为浅灰色
+.table-striped {
+  > tbody > tr:nth-of-type(odd) {
+    background-color:@table-bg-accent;
+  }
+}
+
+// 竖直方向padding缩减一半
+.table-condensed {
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: @table-condensed-cell-padding;
+      }
+    }
+  }
+}
+
+// 鼠标悬停样式
+.table-hover {
+  > tbody > tr:hover {
+    background-color: @table-bg-hover;
+  }
+}
+
+// 定义颜色
+.table-row-variant(active; @table-bg-active);
+.table-row-variant(success; @tr-success-bg);
+.table-row-variant(info; @tr-info-bg);
+.table-row-variant(warning; @tr-warning-bg);
+.table-row-variant(danger; @tr-danger-bg);
+
+// datatable
+.datatable {
+  border-collapse: separate;
+  border-spacing: 0;
+  .clearfix();
+}
+
+.thead-sorting(both);
+.thead-sorting(asc);
+.thead-sorting(desc);
+
+.datatable-td-sorting {
+  background-color: #f5fafe;
+}
+
+.dataTables-wrapper {
+  font-size: @font-size-base;
+  .dataTables-length,
+  .dataTables-info {
+    .f-l();
+  }
+  .dataTables-length {
+    padding-bottom: @line-height-computed;
+    .select {
+      width: 50px;
+    }
+  }
+  .dataTables-filter,
+  .dataTables-paginate {
+    .f-r();
+    .text-r();
+  }
+  .dataTables-filter .input-text {
+    width: auto;
+  }
+  .dataTables-info,
+  .dataTables-paginate {
+    padding-top: @line-height-computed / 2;
+  }
+  .dataTables-info {
+    .clearfix();
+    color: @datatable-color;
+  }
+  .dataTables-paginate .paginate-button {
+    .pre-color(10);
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 2px;
+    .text-c();
+    color: @datatable-color;
+    height: 26px;
+    line-height: 26px;
+    margin: 0 0px (@font-size-small / 2) (@font-size-small / 2);
+    padding: 0 (@line-height-computed / 2);
+    text-decoration: none;
+    &:hover,
+    &.current,
+    &.current:hover {
+      background: spin(@color-info, 18);
+      color: @body-bg;
+    }
+    &.skip-text {
+      input[type="text"] {
+        text-align: center;
+        width: 30px;
+        border: none;
+        height: 20px;
+        line-height: 26px;
+        padding: 0;
+        vertical-align: middle;
+      }
+      &:hover {
+        background: @body-bg;
+        color: @datatable-color;
+      }
+    }
+  }
+}
+
+// 响应式 
+.table-responsive {
+  overflow-x: scroll;
+  @media screen and (max-width: (@screen-sm - 1)) {
+    width: @min;
+    margin-bottom: (@line-height-computed * 0.75);
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+    .pre-color(11);
+    > .table {
+      margin-bottom: 0;
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr {
+          > th,
+          > td {
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+    > .table-bordered {
+      border: 0;
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr {
+          > th:first-child,
+          > td:first-child {
+            border-left: 0;
+          }
+          > th:last-child,
+          > td:last-child {
+            border-right: 0;
+          }
+        }
+        > tr:last-child {
+          > th,
+          > td {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

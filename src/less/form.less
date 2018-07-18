@@ -1,0 +1,333 @@
+// 表单
+.input-focus() {
+  border: 1px solid lighten(@color-primary, 20%);
+  .box-shadow(~"0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6)")
+}
+
+.input-disable() {
+  background-color: darken(@body-bg, 10%);
+  cursor: default;
+  border-color: @table-border;
+  .box-shadow(~"inset 0 2px 2px #e8e7e7");
+}
+
+.input-read-only() {
+  cursor: default;
+  background-color: darken(@body-bg, 5%);
+  border-color: none;
+}
+
+.input-hover() {
+  border: 1px solid lighten(@color-primary, 20%);
+}
+
+.input-error() {
+  background-color: lighten(@color-danger, 35%);
+  border-color: @color-danger;
+  color: @color-danger;
+}
+
+.input-text {
+  .box-sizing(border-box);
+  border: 1px solid @table-border;
+  .transition(~"all 0.2s linear 0s");
+  &:hover {
+    .input-hover();
+  }
+  &.focus,
+  &:focus {
+    .input-focus();
+  }
+  &.focus.disabled,
+  &.disabled,
+  &:disabled {
+    .input-disable();
+  }
+  &:read-only{
+    .input-read-only();
+  }
+  &.error {
+    .input-error();
+  }
+}
+
+form .input-text {
+  width: 100%;
+}
+
+.textarea {
+  &:extend(.input-text);
+  width: 100%;
+  min-height: 100px;
+  resize: none; 
+  font-size: @font-size-base;
+  padding: 4px;
+  outline: none;
+  &:hover {
+    .input-hover();
+  }
+  &.focus,
+  &:focus {
+    .input-focus();
+  }
+  &.focus.disabled
+  &.disabled,
+  &:disabled {
+    .input-disable();
+  }
+  &:read-only {
+    .input-read-only();
+  }
+  &-len {
+    .pos-a();
+    color: @gray-dark;
+    right: 20px; 
+    bottom: 5px; 
+    z-index: 1; 
+    margin-bottom: 0;
+  }
+  &.error {
+    .input-error();
+  }
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.btn-default {
+  .button(@body-bg);
+  color: @gray;
+  border-color: darken(@body-bg, 17.5%)
+}
+
+.button(@bg-color) {
+  background-color: @bg-color;
+  border-color: @bg-color; 
+  color: @body-bg;
+  &:hover,
+  // &:focus,
+  &:active,
+  &.active {
+    background-color: darken(@bg-color, 8.5%);
+    border-color: darken(@bg-color, 17.5%); 
+  }
+}
+
+@btn-suffix: primary, success, info, warning, danger;
+@colors: @color-primary, @color-success, @color-info, @color-warning, @color-danger;
+.btn-status(@index) when(@index < 6) {
+  @class: extract(@btn-suffix, @index);
+  .btn-@{class} {
+    .button(extract(@colors, @index));
+  }
+  .btn-status(@index + 1);
+}
+a.btn {
+  text-decoration: none;
+  &:hover {
+    color: @body-bg;
+  }
+}
+.btn-status(1);
+
+input[type="radio"],
+input[type="checkbox"] {
+  line-height: normal;
+}
+
+@keyframes hover-color {
+  from {border-color: @border-color;}
+  to {border-color: @color-primary;}
+}
+
+.ui-radio,
+.ui-checkbox {
+  position: absolute;
+  display: none;
+  & + label {
+    position: relative;
+    padding-left: 20px;
+    cursor: pointer;
+    vertical-align: middle;
+    &:hover::before {
+      animation-duration: 0.4s;
+      animation-fill-mode: both;
+      animation-name: hover-color;
+    }
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      content: '';
+      border: 1px solid @border-color;
+    }
+    &::after {
+      position: absolute;
+      display: none;
+      content: ''; 
+    }
+  }
+  &:disabled {
+    cursor: not-allowed;
+    & + label {
+      cursor: not-allowed;
+      color: @border-color;
+      &:hover,
+      &::before,
+      &::after {
+        cursor: not-allowed;
+      }
+      &:hover::before {
+        border: 1px solid @border-color;
+        animation-name: none;
+      }
+      &::before {
+        border-color: @border-color;
+      }
+    }
+  }
+  &:checked {
+    & + label::before {
+      animation-name: none; 
+    }
+    & + label::after {
+      display: block;
+    }
+  }
+}
+
+.ui-radio {
+  & + label {
+    &::before {
+      border-radius: 50%;
+    }
+    &::after {
+      top: 6px;
+      left: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: @color-primary;
+    }
+  }
+  &:checked {
+    & + label::before {
+      border: 1px solid @color-primary;
+    }
+    &[disabled] {
+      & + label::before {
+        border: 1px solid @border-color;
+      }
+      & + label::after {
+        background: @border-color;
+      }
+    }
+  }
+}
+
+.ui-checkbox {
+  & + label {
+    &::before {
+      border-radius: 3px;
+    }
+    &::after {
+      top: 2px;
+      left: 7px;
+      box-sizing: border-box;
+      width: 6px;
+      height: 12px;
+      transform: rotate(45deg);
+      border-width: 2px;
+      border-style: solid;
+      border-color: #fff;
+      border-top: 0;
+      border-left: 0;
+    }
+  }
+  &:checked {
+    & + label::before {
+      border: @color-primary;
+      background: @color-primary;
+    }
+    &[disabled] + label::before{
+      border: @border-color;
+      background: @border-color;
+    }
+  }
+}
+
+.ui-select.open > button {
+  
+}
+
+.ui-select.open > button {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  background-color: darken(@body-bg, 8.5%);
+}
+
+.ui-select {
+  display: inline-block;
+  position: relative;
+  & > button {
+    min-width: 120px;    
+    border-radius: 3px;
+    padding-right: 20px;
+    text-align: left;
+    & > .caret {
+      position: absolute;
+      position: absolute;
+      top: 50%;
+      right: 7px;
+      margin-top: -2px;
+    }
+  }
+  & select {
+    display: none;
+  }
+  &.open ul.ui-select-menu {
+    display: block;
+  }
+  & ul.ui-select-menu {
+    display: none;
+    min-height: 0px;
+    max-height: 256px;
+    min-width: 100%;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    border: 1px solid @border-color;
+    border-radius: 3px;
+    background-color: @body-bg;
+    & > li > a {
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      color: @gray;
+      white-space: nowrap;
+      &:hover {
+        text-decoration: none;
+        background-color: darken(@body-bg, 6.5%);
+      }
+    }
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent
+}

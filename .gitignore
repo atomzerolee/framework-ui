@@ -59,3 +59,6 @@ typings/
 
 # next.js build output
 .next
+
+# Ouput of 'npm run build'
+framework/

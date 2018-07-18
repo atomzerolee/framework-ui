@@ -1,0 +1,128 @@
+// 图片集
+// variables
+
+// mixin
+.avatar-size() {
+  @size:16px, 24px, 32px, 48px, 64px;
+  @size-name: size-MINI, size-S, size-M, size-L, size-XL;
+  .img-size(@index) when (@index <= 5) {
+    @class:extract(@size-name, @index);
+    @avatar-size:extract(@size, @index);
+    @item: ~".avatar.@{class},.avatar.@{class} img";
+    @item_2: ~".avatar.@{class}";
+    @{item} when (@index > 1) {
+      .size(@avatar-size, @avatar-size);
+    }
+    @{item_2} when (@index = 1) {
+      .size(@avatar-size, @avatar-size);
+    }
+    .img-size(@index + 1);
+  };
+  .img-size(1);
+}
+// component
+// 图片效果，单个图片显示
+.img-responsive {
+  display: inline-block;
+  max-width: @min;
+  height: auto;
+}
+
+.thumbnail {
+  &:extend(.img-responsive);
+  .box-sizing(border-box);
+  padding: 4px;
+  line-height: @line-height-base;
+  background-color: @body-bg;
+  .pre-color(11);
+  .transition(~"all .2s ease-in-out");
+}
+
+@media (max-width: (@screen-sm - 1)) {
+	.img-responsive {
+    width: @min;
+  }
+}
+
+.duang-opacity img {
+  .transition(~"opacity .1s linear");
+}
+
+.duang-opacity a:hover{
+  & img,
+  & .opacity img {
+    opacity: 0.85;
+    filter: alpha(opacity=85)
+  }
+} 
+
+// 图集效果
+.album-item{
+  .album-img {
+    .pre-color(16);
+    & img {
+      .show();
+      width: @min;
+    }
+  }
+  .album-title {
+    .show();
+    .text-l();
+    padding: 7px 5px;
+    line-height: @line-height-computed - 2;
+    color: @gray;
+    text-decoration: none;
+    font-size: @font-size-small;
+    &:extend(.album-item .album-img);
+    border-top: 0;
+  }
+  .album-bg {
+    .album-bg-Fir,
+    .album-bg-Sec {
+      border: 1px solid ;
+      border-top: 1px solid @table-bg-hover;
+      height: 1px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .album-bg-Fir {
+      margin: 0 3px;
+    }
+    .album-bg-Sec {
+      margin: 0 6px;
+    }
+  }
+}
+
+// 头像
+.avatar {
+  display: inline-block;
+  .pos-r();
+  overflow: hidden;
+  & img {
+    .show();
+  }
+  &.radius {
+    &:extend(.avatar.radius img);
+    & img {
+      border-radius: 50%;
+    }
+  }
+  &,
+  & img {
+    .size(32px, 32px);
+  }
+}
+
+.avatar-size();
+
+// 图标
+.iconpic {
+  display: inline-block;
+  vertical-align: sub;
+  *vertical-align: middle;
+  _vertical-align: middle;
+  .size(16px, 16px);
+  background-position: center;
+  background-repeat: no-repeat
+}

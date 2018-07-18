@@ -22,5 +22,21 @@
   "bugs": {
     "url": "https://github.com/atomzerolee/framework-ui/issues"
   },
-  "homepage": "https://github.com/atomzerolee/framework-ui#readme"
+  "homepage": "https://github.com/atomzerolee/framework-ui#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-clean-css": "^3.9.3",
+    "gulp-header": "^2.0.5",
+    "gulp-less": "^3.5.0",
+    "gulp-modify-file": "^1.0.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.0",
+    "webpack": "^3.10.0",
+    "babel-loader": "^7.1.4",
+    "webpack-stream": "^4.0.3"
+  }
 }

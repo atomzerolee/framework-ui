@@ -1,0 +1,91 @@
+// 标签与表号
+// variables
+@status: primary, success, info, warning, danger;
+@btn-color: @color-primary, @color-success, @color-info, @color-warning, @color-danger;
+// mixin
+.label-bg() {
+  .label-color(@index) when (@index <= 5) {
+    @class:extract(@status,@index);
+    @bg-color:extract(@btn-color,@index);
+    @item: ~".label-@{class},.badge-@{class},.label-@{class}[href],.badge-@{class}[href]";
+    @{item} {
+      background-color:@bg-color;
+    }
+    .label-color(@index + 1);
+  }
+  .label-color(1)
+}
+// component
+// 标签与标号
+.label,
+.badge {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: @font-size-small;
+  font-weight: bold;
+  line-height: @font-size-base;
+  color: @body-bg;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: @input-color-placeholder;
+  overflow: hidden;
+}
+
+// 圆角
+.label {
+  &.radius {
+    border-radius: 3px
+  }
+  &:empty {
+    .hide();
+  }
+  a&:hover,
+  a&:focus{
+    color: @body-bg;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.badge {
+  padding-right: 9px;
+  padding-left: 9px;
+  border-radius: 9px;
+  &:empty {
+    &:extend(.label:empty);
+  }
+  a&:hover,
+  a&:focus{
+    &:extend(a.label:hover);
+  }
+}
+
+// 默认
+.label-default,
+.badge-default,
+.label-default[href],
+.badge-default[href] {
+  color: @gray-dark;
+}
+
+.label-bg();
+
+// 图标
+.icon_lists{
+  width: 100% !important;
+  & li{
+    .f-l();
+    .size(100px,180px);
+    .text-c();
+  }
+  & .icon{
+    font-size: 42px;
+    line-height: 100px;
+    margin: 10px 0;
+    color: @gray-dark;
+    .transition( ~"font-size 0.25s ease-out 0s");
+    &:hover {
+      font-size: 100px;      
+    }
+  }
+}
