@@ -1,0 +1,26 @@
+{
+  "name": "framework-ui",
+  "version": "1.0.1",
+  "description": "后台数据管理界面UI及JavaScript-MVC框架",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atomzerolee/framework-ui.git"
+  },
+  "keywords": [
+    "App",
+    "JavaScript",
+    "MVC",
+    "BackstageManagement",
+    "UI"
+  ],
+  "author": "atomzerolee",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/atomzerolee/framework-ui/issues"
+  },
+  "homepage": "https://github.com/atomzerolee/framework-ui#readme"
+}
