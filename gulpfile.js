@@ -45,7 +45,7 @@ gulp.task('less', () =>
       browsers: ['last 2 versions', 'Android >= 4.0'],
       cascade: true
     }))
-    // .pipe(cssmin())
+    .pipe(cssmin())
     .pipe(header(banner, {pkg : pkg}))
     .pipe(gulp.dest('framework/css'))
 );
