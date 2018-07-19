@@ -5,7 +5,7 @@
 
 ## JavaScript-MVC框架
 
-类似于Backbone的MVC框架，分离视图层、数据层、控制层。
+类似于Backbone的MVC框架，分离视图层、数据层、控制层。如果有Backbone的基础，使用时只需要注意特定得方法即可。[与Backbone的不同](http://backbonejs.org/)(文档正在进一步完善中)
 
 ### 视图层 UI.View
 基于nunjucks模板预编译，监听数据层变化更新DOM。
@@ -113,4 +113,18 @@ UI.sync.onData = (resp, xhr) => {
 
 UI.Model，UI.Collection内部的sync方法也是调用的UI.sync方法。
 
-另外数据请求默认按照RSETful API风格
+另外数据请求默认按照RSETful API风格。
+
+## MVC模式
+> framework-ui 采用了MVC模式，即分为**视图层，数据层，控制层**。
+
+> 视图层主要负责渲染数据层提供的数据，使用nunjucks实现预编译。构造器为UI.View
+
+> 数据层主要负责ORM，实现后端的数据<=>UI界面的数据映射。分为UI.Model实现Map类数据，UI.Collection实现多个相同Model并存的集合数据。
+ 
+> 控制层主要负责监听视图层的交互事件，触发数据更新，实现数据请求。构造器为UI.Controller
+
+## 相关插件
+> 应用framework-ui配套的一系列插件，挂载在 UI.Plugin 对象下，如 UI.Plugin.Table, UI.Plugin.SideMenu UI.Plugin.Select 等等。也可以实现自定义插件。在有对应MVC的情况下，实现起来应该比jQuery实现更为方便。
+> 
+> UI.Plugin的封装与挂载现在正在开发阶段。
