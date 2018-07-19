@@ -60,4 +60,57 @@
 *注意：callback的this指向问题*
 
 ## UI
-> UI是一个根对象，它上面挂载了MVC框架需要使用的构造器和普通对象。同时它也可以作为全局EventBus使用，它继承自自定义Events对象
+> UI是一个根对象，它上面挂载了MVC框架需要使用的构造器和普通对象。同时它也可以作为全局EventBus使用，它继承自Events对象
+
+1. 基本方法
+
+- extend(protoProps, staticProps) 返回一个继承自this的全新构造器，该构造器的原型属性，静态属性由参数决定。
+   - @param protoProps 原型属性对象，类似于原来的construtor.prototype对象
+   - @param staticProps 静态属性对象
+
+```
+ const User = UI.Model.extend(); // User是一个全新的构造器继承自UI.Model
+ const tom = new User(); // tom 是一个User的实例
+```
+
+extend 是主要实现继承的方法，但是一般不会使用 UI.extend，而是通过UI.Model.extend，UI.Collection.extend 实现对数据层视图层的再扩展。
+
+- sync(method, model, resolve, options) 数据同步函数
+   - @param method 数据操作类型，create|update|delete|read|patch
+   - @param model 发起请求的数据层Model或Collection
+   - @param resolve 请求成功回调函数
+   - @param options 配置项
+      - url 数据请求API地址默认是通过Model或Collection指定的url解析确定的，如果配置该参数，则以该参数为请求地址
+      - data 数据请求发送的参数会根据数据操作不同而改变，如果需要其他参数传递，则配置该项为对象，类似 jQuery 中 $.ajax 中的data参数
+   - @return 返回一个jQuery xhr 对象，
+
+sync是数据层持久化的重要方法，它还具有以下属性配置：
+
+   - sync.host 请求地址的公共名 比如 'http://localhost:3010/api/v1'
+   - sync.onError 请求错误的处理函数
+   - sync.onData 请求响应的全局过滤函数，比如自定义code {code: 0, res: []}
+
+上述三条属性通过在全局配置，例如
+
+```
+const UI = require('UI');
+UI.sync.host = 'http://localhost:3010/api/v1';
+UI.sync.onError = (xhr, textStatus, errorThrow) => {
+  throw new Error(`UI.sync Capture an ajax's error: ${textStatus}`)
+}
+UI.sync.onData = (resp, xhr) => {
+  if(typeof resp === 'string') resp = JSON.parse(resp);
+    switch(resp.code) {
+      case 0: return JSON.stringify(resp);
+      case 99: {
+        alert('操作错误')
+        return null;
+      }
+      default: return null;
+    }
+}
+```
+
+UI.Model，UI.Collection内部的sync方法也是调用的UI.sync方法。
+
+另外数据请求默认按照RSETful API风格
