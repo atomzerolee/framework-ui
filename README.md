@@ -30,9 +30,34 @@
 
 ## Events
 > Events是一个事件构造器，与node原生的EventEmitter类似，可以是实现多种事件绑定、卸载的方式。并且提供了对象与对象之间的绑定监听，它是MVC的基础，
-1. 原型方法
-- on(name, callback, context) 绑定事件
-   - @param name 事件名称 用空格隔开表示绑定多个事件
+
+1. 实例属性
+   - events 绑定在实例上的一个属性 在这里存储了绑定的事件信息
+2. 原型方法
+	- on(name, callback, context) 绑定事件监听
+	   - @param `name` **监听的事件** 支持三种格式
+	      - 'click' 字符串 事件名称
+	      - 'click keydown' 多个事件用**空格**隔开 绑定同一个处理函数
+	      - {click: handleClick, keydown: handleKeydown} 事件map
+	   - @param `callback` **事件回调函数**
+	   - @param `context` **回调函数调用作用域**
+	- once(name, callback, context) 绑定一次事件监听
+	   - 参数与on相同，但是事件回调函数只触发一次
+	- off(name, callback, context) 移除事件监听
+	   - 参数与on相同，需注意callback必须一致才能移除监听，匿名函数注意
+	- emit(name, ...arguments) 触发事件
+	   - @param `name` 触发的事件名称 与on的参数name相同
+	   - @param `arguments` 传递给监听回调函数的参数
+
+上述的方法都是在当前A对象中监听A自己的事件，之后的方法是A监听B的事件，则意味着B的事件触发后，调用A的监听函数。
+   - listenTo(obj, name, callback) 当前对象监听obj对象的事件
+      - @param 参数与on类似 只是obj一定要obj一定也要为Events的实例
+   - listenToOnce(obj, name, callback) 绑定一次事件监听
+   - stopListening(obj, name, callback) 停止监听obj对象的事件
+ 
+**Events作为框架的基石，基本UI之下的所有构造器都继承自Events。**
+
+*注意：callback的this指向问题*
 
 ## UI
 > UI是一个根对象，它上面挂载了MVC框架需要使用的构造器和普通对象。同时它也可以作为全局EventBus使用，它继承自自定义Events对象
