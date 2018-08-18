@@ -1,7 +1,7 @@
 {
   "name": "framework-ui",
   "version": "1.0.1",
-  "description": "后台数据管理界面UI及JavaScript-MVC框架",
+  "description": "后台数据管理界面UI库及JavaScript-MVVM框架",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,11 +11,9 @@
     "url": "git+https://github.com/atomzerolee/framework-ui.git"
   },
   "keywords": [
-    "App",
+    "MVVM",
     "JavaScript",
-    "MVC",
-    "BackstageManagement",
-    "UI"
+    "framework"
   ],
   "author": "atomzerolee",
   "license": "Apache-2.0",
@@ -24,19 +22,6 @@
   },
   "homepage": "https://github.com/atomzerolee/framework-ui#readme",
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "clean-webpack-plugin": "^0.1.19",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-clean-css": "^3.9.3",
-    "gulp-header": "^2.0.5",
-    "gulp-less": "^3.5.0",
-    "gulp-modify-file": "^1.0.1",
-    "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.0",
-    "webpack": "^3.10.0",
-    "babel-loader": "^7.1.4",
-    "webpack-stream": "^4.0.3"
+    
   }
 }
