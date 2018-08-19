@@ -4,7 +4,7 @@
   "description": "后台数据管理界面UI库及JavaScript-MVVM框架",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config webpack.config.js --mode=development"
   },
   "repository": {
     "type": "git",
@@ -13,7 +13,8 @@
   "keywords": [
     "MVVM",
     "JavaScript",
-    "framework"
+    "framework",
+    "UI"
   ],
   "author": "atomzerolee",
   "license": "Apache-2.0",
@@ -21,7 +22,15 @@
     "url": "https://github.com/atomzerolee/framework-ui/issues"
   },
   "homepage": "https://github.com/atomzerolee/framework-ui#readme",
-  "dependencies": {
-    
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
   }
 }

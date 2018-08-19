@@ -2,31 +2,26 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const entry = path.resolve(__dirname, 'src/source/index.js')
-const output = path.resolve(__dirname, 'framework/js');
+const entry = path.resolve(__dirname, 'src/ui.js')
+const output = path.resolve(__dirname, 'dist');
+
 module.exports = {
   entry: {
     'ui': entry,
-    'ui.min': entry
   },
+  devtool: 'cheap-source-map',
   output: {
-    library: 'UI',
-    libraryTarget: 'umd',
     path: output,
     filename: `[name].js`,
   },
-  externals: ['underscore', 'jquery', 'nunjucks'],
   module: {
     rules: [{
-      test: /\.js$/, 
-      exclude: /node_modules/, 
-      loader: "babel-loader"
+      test: /\.(js|jsx)$/, 
+      loader: "babel-loader",
+      exclude: /node_modules/
     }]
   },
   plugins: [
-    new CleanWebpackPlugin(path.resolve(__dirname, 'framework')),
-    new webpack.optimize.UglifyJsPlugin({
-      include: /ui.min/,
-    })
+    new CleanWebpackPlugin(path.resolve(__dirname, 'dist')),
   ]
 }
