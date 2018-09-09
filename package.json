@@ -22,7 +22,9 @@
     "url": "https://github.com/atomzerolee/framework-ui/issues"
   },
   "homepage": "https://github.com/atomzerolee/framework-ui#readme",
-  "dependencies": {},
+  "dependencies": {
+    "ts-loader": "^5.0.0"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
